@@ -9,11 +9,7 @@ class GroupListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const GroupDetailView(),
-          )),
+      onTap: () => Navigator.pushNamed(context, GroupDetailView.routeName),
       child: Card(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25),

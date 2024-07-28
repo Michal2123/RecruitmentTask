@@ -4,13 +4,14 @@ import 'package:flutter_recruitment_task/src/group_list/group_view/group_form_vi
 class GroupDetailView extends StatelessWidget {
   const GroupDetailView({super.key});
 
+  static const routeName = '/groupDetailView';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const GroupFormView())),
+        onPressed: () => Navigator.pushNamed(context, GroupFormView.routeName),
         child: const Text(
           'Edit',
           style: TextStyle(fontSize: 22),

@@ -6,12 +6,13 @@ import '../../widgets/form_sections/form_floating_action_button_section.dart';
 
 class GroupFormView extends StatefulWidget {
   const GroupFormView({super.key});
-
+  static const routeName = '/groupFormView';
   @override
   State<GroupFormView> createState() => _NewGroupFormViewState();
 }
 
 class _NewGroupFormViewState extends State<GroupFormView> {
+  final checkboxFormFielKey = const ValueKey('checkboxKey');
   final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -33,6 +34,7 @@ class _NewGroupFormViewState extends State<GroupFormView> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: CheckboxFormField(
+                  key: checkboxFormFielKey,
                   validator: (value) {
                     if (value != null &&
                         value.isNotEmpty &&

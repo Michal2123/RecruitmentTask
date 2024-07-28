@@ -9,8 +9,7 @@ class GroupListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const GroupFormView())),
+        onPressed: () => Navigator.pushNamed(context, GroupFormView.routeName),
         child: const Icon(
           Icons.add,
           size: 34,

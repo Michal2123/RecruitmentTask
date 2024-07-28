@@ -3,6 +3,7 @@ import 'package:flutter_recruitment_task/src/person_list/person_view/person_deta
 import 'package:flutter_recruitment_task/src/person_list/person_view/person_detail_view/person_detail_view_sections/paragraph_section.dart';
 
 class PersonDetailView extends StatelessWidget {
+  static const routeName = '/personDetailView';
   const PersonDetailView({super.key});
 
   @override

@@ -10,8 +10,7 @@ class PersonListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => const PersonDetailView())),
+      onTap: () => Navigator.of(context).pushNamed(PersonDetailView.routeName),
       child: Card(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25),

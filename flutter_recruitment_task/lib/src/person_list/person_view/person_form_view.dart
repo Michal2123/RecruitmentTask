@@ -5,7 +5,7 @@ import 'package:flutter_recruitment_task/src/utils/enums.dart';
 
 class PersonFormView extends StatefulWidget {
   const PersonFormView({super.key});
-
+  static const routeName = '/personFormView';
   @override
   State<PersonFormView> createState() => _PersonFormViewState();
 }

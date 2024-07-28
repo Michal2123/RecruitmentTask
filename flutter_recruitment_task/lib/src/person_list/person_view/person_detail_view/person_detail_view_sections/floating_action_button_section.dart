@@ -7,8 +7,7 @@ class PersonDetailFloatinActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
-      onPressed: () => Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const PersonFormView())),
+      onPressed: () => Navigator.pushNamed(context, PersonFormView.routeName),
       child: const Text(
         'Edit',
         style: TextStyle(fontSize: 22),

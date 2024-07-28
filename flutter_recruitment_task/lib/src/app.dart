@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_recruitment_task/src/group_list/group_view/group_list_view.dart';
-import 'package:flutter_recruitment_task/src/person_list/person_view/person_list_view.dart';
+import 'package:flutter_recruitment_task/src/group_list/group_view/group_detail_view.dart';
+import 'package:flutter_recruitment_task/src/group_list/group_view/group_form_view.dart';
+import 'package:flutter_recruitment_task/src/home_view.dart';
+import 'package:flutter_recruitment_task/src/person_list/person_view/person_detail_view/person_detail_view.dart';
+import 'package:flutter_recruitment_task/src/person_list/person_view/person_form_view.dart';
 
 import 'settings/settings_controller.dart';
 
@@ -101,25 +104,26 @@ class MyApp extends StatelessWidget {
 
           // Define a function to handle named routes in order to support
           // Flutter web url navigation and deep linking.
-          home: DefaultTabController(
-              length: 2,
-              child: Scaffold(
-                appBar: AppBar(
-                  title: const Text('Recruitment Taks'),
-                ),
-                body: const TabBarView(
-                    children: [PersonListView(), GroupListView()]),
-                bottomNavigationBar: const TabBar(tabs: [
-                  Tab(
-                    icon: Icon(Icons.person),
-                    text: 'Persons',
-                  ),
-                  Tab(
-                    icon: Icon(Icons.groups_2),
-                    text: 'Groups',
-                  ),
-                ]),
-              )),
+          onGenerateRoute: (RouteSettings routeSettings) {
+            return MaterialPageRoute<void>(
+              settings: routeSettings,
+              builder: (BuildContext context) {
+                switch (routeSettings.name) {
+                  case HomeView.routeName:
+                    return const HomeView();
+                  case GroupFormView.routeName:
+                    return const GroupFormView();
+                  case GroupDetailView.routeName:
+                    return const GroupDetailView();
+                  case PersonFormView.routeName:
+                    return const PersonFormView();
+                  case PersonDetailView.routeName:
+                  default:
+                    return const PersonDetailView();
+                }
+              },
+            );
+          },
         );
       },
     );

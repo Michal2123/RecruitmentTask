@@ -9,8 +9,7 @@ class PersonListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const PersonFormView())),
+        onPressed: () => Navigator.pushNamed(context, PersonFormView.routeName),
         child: const Icon(
           Icons.add,
           size: 34,

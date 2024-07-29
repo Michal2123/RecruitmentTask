@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recruitment_task/src/person_list/person_view/person_detail_view/person_detail_view_sections/floating_action_button_section.dart';
-import 'package:flutter_recruitment_task/src/person_list/person_view/person_detail_view/person_detail_view_sections/paragraph_section.dart';
+import 'package:flutter_recruitment_task/src/person_list/view/person_detail_view/person_detail_view_sections/floating_action_button_section.dart';
+import 'package:flutter_recruitment_task/src/person_list/view/person_detail_view/person_detail_view_sections/paragraph_section.dart';
 
 class PersonDetailView extends StatelessWidget {
   static const routeName = '/personDetailView';

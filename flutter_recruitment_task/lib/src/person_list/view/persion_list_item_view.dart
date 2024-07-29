@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recruitment_task/src/person_list/person_view/person_detail_view/person_detail_view.dart';
+import 'package:flutter_recruitment_task/src/person_list/view/person_detail_view/person_detail_view.dart';
 
 class PersonListItem extends StatelessWidget {
   const PersonListItem(

@@ -3,3 +3,5 @@ enum InputFormatters {
   birthDate,
   none;
 }
+
+enum PersonStatus { initial, loading, succes, error }

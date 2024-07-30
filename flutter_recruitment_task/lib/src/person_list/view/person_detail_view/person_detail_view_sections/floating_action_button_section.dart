@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recruitment_task/src/person_list/view/person_form_view.dart';
+import 'package:flutter_recruitment_task/src/person_list/view/person_form_view/person_form_view.dart';
 
 class PersonDetailFloatinActionButton extends StatelessWidget {
   const PersonDetailFloatinActionButton({super.key});

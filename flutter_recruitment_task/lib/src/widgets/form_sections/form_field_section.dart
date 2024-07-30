@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_recruitment_task/src/person_list/block/person_block.dart';
 import 'package:flutter_recruitment_task/src/widgets/form_sections/form_label_section.dart';
 import 'package:flutter_recruitment_task/src/utils/enums.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class FormFieldSection extends StatefulWidget {
-  const FormFieldSection(
-      {super.key,
-      required this.title,
-      required this.hintText,
-      this.inputFormat = InputFormatters.none});
+  const FormFieldSection({
+    super.key,
+    required this.title,
+    required this.hintText,
+    required this.fieldName,
+    required this.initialValue,
+    this.inputFormat = InputFormatters.none,
+  });
   final String title;
   final String hintText;
+  final String? initialValue;
+  final String fieldName;
   final InputFormatters inputFormat;
 
   @override
@@ -23,6 +30,13 @@ class _FormFieldSectionState extends State<FormFieldSection> {
       mask: '##/##/####', filter: {"#": RegExp(r'[0-9]')});
   final _zipCode =
       MaskTextInputFormatter(mask: '##-###', filter: {"#": RegExp(r'[0-9]')});
+
+  @override
+  void initState() {
+    controller.text = widget.initialValue ?? '';
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -43,6 +57,9 @@ class _FormFieldSectionState extends State<FormFieldSection> {
                 InputFormatters.birthDate => [_birthDate],
                 InputFormatters.none => null
               },
+              onSaved: (newValue) => context
+                  .read<PersonBloc>()
+                  .saveFormData({widget.fieldName: newValue}),
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Wypełnij pole';

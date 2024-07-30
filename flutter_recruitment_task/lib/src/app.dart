@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_recruitment_task/src/group_list/group_view/group_detail_view.dart';
-import 'package:flutter_recruitment_task/src/group_list/group_view/group_form_view.dart';
+import 'package:flutter_recruitment_task/src/group_list/group_view/group_form_view/group_form_view.dart';
 import 'package:flutter_recruitment_task/src/home_view.dart';
 import 'package:flutter_recruitment_task/src/person_list/view/person_detail_view/person_detail_view.dart';
-import 'package:flutter_recruitment_task/src/person_list/view/person_form_view.dart';
+import 'package:flutter_recruitment_task/src/person_list/view/person_form_view/person_form_view.dart';
 
 import 'settings/settings_controller.dart';
 

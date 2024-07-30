@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_recruitment_task/src/utils/enums.dart';
 import 'package:uuid/uuid.dart';
 
 @immutable
@@ -27,13 +28,14 @@ final class PersonModel extends Equatable {
 
   factory PersonModel.fromJson(Map<String, dynamic> json) {
     return PersonModel(
-        firstName: json['firstName'],
-        lastName: json['lastName'],
-        birthDate: json['birthDate'],
-        zipCode: json['zipCode'],
-        city: json['city'],
-        street: json['street'],
-        groups: json['groups']);
+        id: json['id'],
+        firstName: json[PersonFieldName.firstName.name],
+        lastName: json[PersonFieldName.lastName.name],
+        birthDate: json[PersonFieldName.birthDate.name],
+        zipCode: json[PersonFieldName.zipCode.name],
+        city: json[PersonFieldName.city.name],
+        street: json[PersonFieldName.street.name],
+        groups: json[PersonFieldName.groups.name]);
   }
 
   @override

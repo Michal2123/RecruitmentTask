@@ -1,37 +1,32 @@
 part of 'person_block.dart';
 
-sealed class PersonEvent extends Equatable {
-  const PersonEvent();
-
-  @override
-  List<Object> get props => [];
-}
+sealed class PersonEvent extends Equatable {}
 
 final class PersonListGet extends PersonEvent {
-  const PersonListGet();
-
   @override
   List<Object> get props => [];
 }
 
-final class PersonCreate extends PersonEvent {
-  const PersonCreate({required this.person});
+final class PersonSelect extends PersonEvent {
+  PersonSelect({required this.person});
   final PersonModel person;
 
   @override
   List<Object> get props => [person];
 }
 
-final class PersonEdit extends PersonEvent {
-  const PersonEdit({required this.person});
-  final PersonModel person;
-
+final class PersonSelectClear extends PersonEvent {
   @override
-  List<Object> get props => [person];
+  List<Object> get props => [];
+}
+
+final class PersonSave extends PersonEvent {
+  @override
+  List<Object> get props => [];
 }
 
 final class PersonDelete extends PersonEvent {
-  const PersonDelete({required this.person});
+  PersonDelete({required this.person});
   final PersonModel person;
 
   @override

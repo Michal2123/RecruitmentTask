@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recruitment_task/src/model/group_model.dart';
 
-class CheckboxFormField extends FormField<List<bool>> {
+class CheckboxFormField extends FormField<List<bool?>> {
   CheckboxFormField(
       {super.key,
-      required Map<String, bool> items,
+      required List<GroupMemberModel> items,
+      required Function(bool? value, String id, String firstname) onChange,
       super.onSaved,
       super.validator,
       bool initialValue = false,
       bool autovalidate = false})
       : super(
-            initialValue: items.values.toList(),
-            builder: (FormFieldState<List<bool>> state) {
+            initialValue: items.map((e) => e.isCheck).toList(),
+            builder: (FormFieldState<List<bool?>> state) {
               return Column(children: [
                 Container(
                   decoration: state.hasError
@@ -21,14 +23,15 @@ class CheckboxFormField extends FormField<List<bool>> {
                       : null,
                   child: Column(
                     children: [
-                      for (var item in items.entries)
+                      for (var item in items)
                         CheckboxListTile(
                           title: Text(
-                            item.key,
+                            item.firstName,
                             style: const TextStyle(fontSize: 18),
                           ),
-                          value: item.value,
-                          onChanged: (value) {},
+                          value: item.isCheck,
+                          onChanged: (value) =>
+                              onChange(value, item.id, item.firstName),
                         )
                     ],
                   ),
@@ -45,21 +48,5 @@ class CheckboxFormField extends FormField<List<bool>> {
                   ),
                 ],
               ]);
-              // CheckboxListTile(
-              //   dense: state.hasError,
-              //   title: title,
-              //   value: state.value,
-              //   onChanged: state.didChange,
-              //   subtitle: state.value?.any((element) => element) ?? false
-              //       ? Builder(
-              //           builder: (BuildContext context) => Text(
-              //             state.errorText ?? "",
-              //             style: TextStyle(
-              //                 color: Theme.of(context).colorScheme.error),
-              //           ),
-              //         )
-              //       : null,
-              //   controlAffinity: ListTileControlAffinity.leading,
-              // );
             });
 }

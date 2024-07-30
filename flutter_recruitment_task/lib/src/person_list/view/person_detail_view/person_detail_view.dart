@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_recruitment_task/src/person_list/block/person_block.dart';
 import 'package:flutter_recruitment_task/src/person_list/view/person_detail_view/person_detail_view_sections/floating_action_button_section.dart';
 import 'package:flutter_recruitment_task/src/person_list/view/person_detail_view/person_detail_view_sections/paragraph_section.dart';
 
@@ -12,74 +14,82 @@ class PersonDetailView extends StatelessWidget {
       appBar: AppBar(),
       floatingActionButton: const PersonDetailFloatinActionButton(),
       body: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          children: const [
-            ParagraphSection(
-              elements: [
-                Text(
-                  'Firstname',
-                  style: TextStyle(fontSize: 24),
-                ),
-                Text(
-                  'Person 1',
-                  style: TextStyle(fontSize: 18),
-                ),
-              ],
-            ),
-            ParagraphSection(
-              elements: [
-                Text(
-                  'Lastname',
-                  style: TextStyle(fontSize: 24),
-                ),
-                Text(
-                  'Person 1',
-                  style: TextStyle(fontSize: 18),
-                ),
-              ],
-            ),
-            ParagraphSection(
-              elements: [
-                Text(
-                  'Birth Date',
-                  style: TextStyle(fontSize: 24),
-                ),
-                Text(
-                  '01/01/2001',
-                  style: TextStyle(fontSize: 18),
-                ),
-              ],
-            ),
-            ParagraphSection(
-              elements: [
-                Text(
-                  'Adress',
-                  style: TextStyle(fontSize: 24),
-                ),
-                Text(
-                  '00-102 Warszawa',
-                  style: TextStyle(fontSize: 18),
-                ),
-                Text(
-                  'Marszałkowska 14/23',
-                  style: TextStyle(fontSize: 18),
-                ),
-              ],
-            ),
-            ParagraphSection(
-              elements: [
-                Text(
-                  'Groups',
-                  style: TextStyle(fontSize: 24),
-                ),
-                Text(
-                  'Group 1',
-                  style: TextStyle(fontSize: 18),
-                ),
-              ],
-            ),
-          ],
+        child: BlocBuilder<PersonBloc, PersonState>(
+          builder: (context, state) => ListView(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            children: [
+              ParagraphSection(
+                elements: [
+                  const Text(
+                    'Firstname',
+                    style: TextStyle(fontSize: 24),
+                  ),
+                  Text(
+                    state.person?.firstName ?? '',
+                    style: const TextStyle(fontSize: 18),
+                  ),
+                ],
+              ),
+              ParagraphSection(
+                elements: [
+                  const Text(
+                    'Lastname',
+                    style: TextStyle(fontSize: 24),
+                  ),
+                  Text(
+                    state.person?.lastName ?? '',
+                    style: const TextStyle(fontSize: 18),
+                  ),
+                ],
+              ),
+              ParagraphSection(
+                elements: [
+                  const Text(
+                    'Birth Date',
+                    style: TextStyle(fontSize: 24),
+                  ),
+                  Text(
+                    state.person?.birthDate ?? '',
+                    style: const TextStyle(fontSize: 18),
+                  ),
+                ],
+              ),
+              ParagraphSection(
+                elements: [
+                  const Text(
+                    'Adress',
+                    style: TextStyle(fontSize: 24),
+                  ),
+                  Text(
+                    '${state.person?.zipCode ?? ''}, ${state.person?.city ?? ''}',
+                    style: const TextStyle(fontSize: 18),
+                  ),
+                  Text(
+                    state.person?.street ?? '',
+                    style: const TextStyle(fontSize: 18),
+                  ),
+                ],
+              ),
+              ParagraphSection(
+                elements: [
+                  const Text(
+                    'Groups',
+                    style: TextStyle(fontSize: 24),
+                  ),
+                  Wrap(
+                    spacing: 5,
+                    children: [
+                      for (var group in state.person?.groups ?? [])
+                        Text(
+                          group.toString(),
+                          style: const TextStyle(fontSize: 18),
+                        )
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

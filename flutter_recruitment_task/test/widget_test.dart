@@ -10,16 +10,32 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_recruitment_task/src/group_list/group_view/group_detail_view.dart';
-import 'package:flutter_recruitment_task/src/group_list/group_view/group_form_view.dart';
+import 'package:flutter_recruitment_task/src/group_list/group_view/group_form_view/group_form_view.dart';
 import 'package:flutter_recruitment_task/src/group_list/group_view/group_list_item_view.dart';
 import 'package:flutter_recruitment_task/src/group_list/group_view/group_list_view.dart';
+import 'package:flutter_recruitment_task/src/model/group_model.dart';
+import 'package:flutter_recruitment_task/src/model/person_model.dart';
 import 'package:flutter_recruitment_task/src/person_list/view/persion_list_item_view.dart';
 import 'package:flutter_recruitment_task/src/person_list/view/person_detail_view/person_detail_view.dart';
-import 'package:flutter_recruitment_task/src/person_list/view/person_form_view.dart';
+import 'package:flutter_recruitment_task/src/person_list/view/person_form_view/person_form_view.dart';
 import 'package:flutter_recruitment_task/src/person_list/view/person_list_view.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  final PersonModel personMock = PersonModel(
+      firstName: 'person1',
+      lastName: 'aerson',
+      birthDate: '01/10/2001',
+      city: 'Warsaw',
+      street: 'street 1',
+      zipCode: '00-000',
+      groups: const []);
+
+  final GroupModel grouModel =
+      GroupModel(groupName: 'Group1', groupMemberList: const <GroupMemberModel>[
+    GroupMemberModel(id: '1', firstName: 'person1'),
+    GroupMemberModel(id: '2', firstName: 'person2')
+  ]);
   group('PersonFormView', () {
     testWidgets('Verify add person button present on PersonFormView',
         (WidgetTester tester) async {
@@ -43,10 +59,9 @@ void main() {
   group('PersonListItem', () {
     testWidgets('Verify if PersonListItem takes title and describe parameters',
         (WidgetTester tester) async {
-      await tester.pumpWidget(const MaterialApp(
+      await tester.pumpWidget(MaterialApp(
         home: PersonListItem(
-          title: 'T',
-          describe: 'D',
+          person: personMock,
         ),
       ));
       var titleText = find.text('T');
@@ -57,10 +72,9 @@ void main() {
     });
     testWidgets('Verify remove person icon present on PersonListItem',
         (WidgetTester tester) async {
-      await tester.pumpWidget(const MaterialApp(
+      await tester.pumpWidget(MaterialApp(
         home: PersonListItem(
-          title: 'T',
-          describe: 'D',
+          person: personMock,
         ),
       ));
       var icon = find.byIcon(Icons.person_remove);
@@ -69,10 +83,9 @@ void main() {
     });
     testWidgets('Verify two GestoreDetectors present on PersonListItem',
         (WidgetTester tester) async {
-      await tester.pumpWidget(const MaterialApp(
+      await tester.pumpWidget(MaterialApp(
         home: PersonListItem(
-          title: 'T',
-          describe: 'D',
+          person: personMock,
         ),
       ));
       var gestureDetector = find.byType(GestureDetector);
@@ -134,10 +147,9 @@ void main() {
   group('GroupListItem', () {
     testWidgets('Verify if GroupListItem takes title and describe parameters',
         (WidgetTester tester) async {
-      await tester.pumpWidget(const MaterialApp(
+      await tester.pumpWidget(MaterialApp(
         home: GroupListItem(
-          title: 'T',
-          describe: 'D',
+          group: grouModel,
         ),
       ));
       var titleText = find.text('T');
@@ -148,10 +160,9 @@ void main() {
     });
     testWidgets('Verify remove group icon present on GroupListItem',
         (WidgetTester tester) async {
-      await tester.pumpWidget(const MaterialApp(
+      await tester.pumpWidget(MaterialApp(
         home: GroupListItem(
-          title: 'T',
-          describe: 'D',
+          group: grouModel,
         ),
       ));
       var icon = find.byIcon(Icons.group_remove);
@@ -160,10 +171,9 @@ void main() {
     });
     testWidgets('Verify two GestoreDetectors present on GroupListItem',
         (WidgetTester tester) async {
-      await tester.pumpWidget(const MaterialApp(
+      await tester.pumpWidget(MaterialApp(
         home: GroupListItem(
-          title: 'T',
-          describe: 'D',
+          group: grouModel,
         ),
       ));
       var gestureDetector = find.byType(GestureDetector);

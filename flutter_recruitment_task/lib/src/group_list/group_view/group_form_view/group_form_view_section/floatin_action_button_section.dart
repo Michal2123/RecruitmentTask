@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_recruitment_task/src/group_list/block/group_bloc.dart';
+import 'package:flutter_recruitment_task/src/person_list/block/person_block.dart';
 import 'package:flutter_recruitment_task/src/utils/enums.dart';
 
 class GroupFloatinActionButtonFormSection extends StatefulWidget {
@@ -23,9 +24,13 @@ class _FloatinActionButtonFormSectionState
                 if (widget.formKey.currentState!.validate())
                   {
                     widget.formKey.currentState!.save(),
-                    //context.read<PersonBloc>()..add(PersonSave()),
+                    context.read<GroupBloc>()..add(GroupSave()),
                     if (state.status == GroupStatus.succes)
-                      {Navigator.pop(context)}
+                      {
+                        context.read<PersonBloc>()
+                          ..add(PersonGroupEdit(groupId: state.group?.id)),
+                        Navigator.pop(context)
+                      }
                   }
               },
           child: const Text(

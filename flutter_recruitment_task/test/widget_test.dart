@@ -23,19 +23,22 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   final PersonModel personMock = PersonModel(
+      id: '1',
       firstName: 'person1',
       lastName: 'aerson',
       birthDate: '01/10/2001',
       city: 'Warsaw',
       street: 'street 1',
       zipCode: '00-000',
-      groups: const []);
+      personGroupList: const []);
 
-  final GroupModel grouModel =
-      GroupModel(groupName: 'Group1', groupMemberList: const <GroupMemberModel>[
-    GroupMemberModel(id: '1', firstName: 'person1'),
-    GroupMemberModel(id: '2', firstName: 'person2')
-  ]);
+  final GroupModel grouModel = GroupModel(
+      id: '1',
+      groupName: 'Group1',
+      groupMemberList: const <GroupMemberModel>[
+        GroupMemberModel(id: '1', firstName: 'person1'),
+        GroupMemberModel(id: '2', firstName: 'person2')
+      ]);
   group('PersonFormView', () {
     testWidgets('Verify add person button present on PersonFormView',
         (WidgetTester tester) async {

@@ -32,3 +32,10 @@ final class PersonDelete extends PersonEvent {
   @override
   List<Object> get props => [person];
 }
+
+final class PersonGroupEdit extends PersonEvent {
+  PersonGroupEdit({required this.groupId});
+  final String? groupId;
+  @override
+  List<Object> get props => [];
+}

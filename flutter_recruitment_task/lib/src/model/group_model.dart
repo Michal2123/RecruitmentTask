@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_recruitment_task/src/utils/enums.dart';
 import 'package:uuid/uuid.dart';
 
 @immutable
@@ -10,20 +11,29 @@ class GroupModel extends Equatable {
         id = id ?? const Uuid().v4();
   final String id;
   final String groupName;
-  final List<GroupMemberModel>? groupMemberList;
+  final List<GroupMemberModel> groupMemberList;
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      GroupFieldName.groupName.name: groupName,
+      GroupFieldName.groupMemberList.name: groupMemberList,
+    };
+  }
 
   factory GroupModel.fromJson(Map<String, dynamic> json) {
-    var groupMemberList = List<dynamic>.from(json['groupMemberList'])
-        .map((e) => GroupMemberModel.fromJson(e))
-        .toList();
+    var groupMemberList =
+        List<dynamic>.from(json[GroupFieldName.groupMemberList.name])
+            .map((e) => GroupMemberModel.fromJson(e))
+            .toList();
     return GroupModel(
         id: json['id'],
-        groupName: json['groupName'],
+        groupName: json[GroupFieldName.groupName.name],
         groupMemberList: groupMemberList);
   }
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [id, groupName, groupMemberList];
 }
 
 @immutable
@@ -40,5 +50,5 @@ class GroupMemberModel extends Equatable {
   }
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [id, firstName, isCheck];
 }

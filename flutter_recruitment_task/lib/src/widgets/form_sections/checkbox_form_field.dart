@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_recruitment_task/src/model/group_model.dart';
 
 class CheckboxFormField extends FormField<List<bool?>> {
-  CheckboxFormField(
-      {super.key,
-      required List<GroupMemberModel> items,
-      required Function(bool? value, String id, String firstname) onChange,
-      super.onSaved,
-      super.validator,
-      bool initialValue = false,
-      bool autovalidate = false})
-      : super(
+  CheckboxFormField({
+    super.key,
+    required List<GroupMemberModel> items,
+    required Function(bool? value, String id, String firstname) onChange,
+    super.onSaved,
+    super.validator,
+  }) : super(
             initialValue: items.map((e) => e.isCheck).toList(),
             builder: (FormFieldState<List<bool?>> state) {
               return Column(children: [
@@ -30,8 +28,13 @@ class CheckboxFormField extends FormField<List<bool?>> {
                             style: const TextStyle(fontSize: 18),
                           ),
                           value: item.isCheck,
-                          onChanged: (value) =>
-                              onChange(value, item.id, item.firstName),
+                          onChanged: (value) {
+                            item = GroupMemberModel(
+                                id: item.id,
+                                firstName: item.firstName,
+                                isCheck: value);
+                            onChange(value, item.id, item.firstName);
+                          },
                         )
                     ],
                   ),

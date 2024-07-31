@@ -15,5 +15,12 @@ enum PersonFieldName {
   zipCode,
   city,
   street,
-  groups;
+  personGroupList;
 }
+
+enum GroupFieldName {
+  groupName,
+  groupMemberList;
+}
+
+enum DatabaseTables { person, group }

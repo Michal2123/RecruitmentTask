@@ -1,21 +1,20 @@
 part of 'person_block.dart';
 
 final class PersonState extends Equatable {
-  const PersonState(
-      {required this.status,
-      required this.personList,
-      required this.person,
-      required this.personId});
+  const PersonState({
+    required this.status,
+    required this.personList,
+    required this.person,
+  });
   final PersonStatus status;
   final List<PersonModel> personList;
   final PersonModel? person;
-  final String? personId;
 
   static PersonState initial() => const PersonState(
-      status: PersonStatus.initial,
-      personList: <PersonModel>[],
-      person: null,
-      personId: null);
+        status: PersonStatus.initial,
+        personList: <PersonModel>[],
+        person: null,
+      );
 
   PersonState copyWith(
       {PersonStatus? status,
@@ -23,17 +22,17 @@ final class PersonState extends Equatable {
       PersonModel? person,
       String? personId}) {
     return PersonState(
-        status: status ?? this.status,
-        personList: personList ?? this.personList,
-        person: person,
-        personId: personId);
+      status: status ?? this.status,
+      personList: personList ?? this.personList,
+      person: person,
+    );
   }
 
   @override
   String toString() {
-    return 'PersonState {personList: $personList, personModel: $person, personId: $personId}';
+    return 'PersonState {personList: $personList, personModel: $person}';
   }
 
   @override
-  List<Object?> get props => [status, personList, person, personId];
+  List<Object?> get props => [status, personList, person];
 }

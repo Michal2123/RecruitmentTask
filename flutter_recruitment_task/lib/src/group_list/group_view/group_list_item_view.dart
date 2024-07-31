@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_recruitment_task/src/group_list/block/group_bloc.dart';
 import 'package:flutter_recruitment_task/src/group_list/group_view/group_detail_view.dart';
 import 'package:flutter_recruitment_task/src/model/group_model.dart';
+import 'package:flutter_recruitment_task/src/person_list/block/person_block.dart';
 
 class GroupListItem extends StatelessWidget {
   const GroupListItem({super.key, required this.group});
@@ -29,8 +30,7 @@ class GroupListItem extends StatelessWidget {
                       style: const TextStyle(fontSize: 24),
                     ),
                     Wrap(spacing: 5, children: [
-                      for (var person
-                          in group.groupMemberList ?? <GroupMemberModel>[])
+                      for (var person in group.groupMemberList)
                         Text(
                           person.firstName,
                           style: const TextStyle(fontSize: 18),
@@ -40,8 +40,12 @@ class GroupListItem extends StatelessWidget {
                 ),
               ),
               GestureDetector(
-                onTap: () =>
-                    context.read<GroupBloc>()..add(GroupDelete(group: group)),
+                onTap: () {
+                  context.read<GroupBloc>().add(GroupDelete(group: group));
+                  context
+                      .read<PersonBloc>()
+                      .add(PersonGroupEdit(groupId: group.id));
+                },
                 child: const Icon(
                   Icons.group_remove,
                 ),

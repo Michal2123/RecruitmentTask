@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_recruitment_task/src/group_list/block/group_bloc.dart';
 import 'package:flutter_recruitment_task/src/model/person_model.dart';
 import 'package:flutter_recruitment_task/src/person_list/block/person_block.dart';
 import 'package:flutter_recruitment_task/src/person_list/view/person_detail_view/person_detail_view.dart';
@@ -66,9 +67,14 @@ class _PersonListItemState extends State<PersonListItem> {
                 ),
               ),
               GestureDetector(
-                onTap: () => context
-                    .read<PersonBloc>()
-                    .add(PersonDelete(person: widget.person)),
+                onTap: () {
+                  context
+                      .read<PersonBloc>()
+                      .add(PersonDelete(person: widget.person));
+                  context
+                      .read<GroupBloc>()
+                      .add(GroupEditPersonDelete(personId: widget.person.id));
+                },
                 child: const Icon(
                   Icons.person_remove,
                 ),

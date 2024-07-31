@@ -10,15 +10,17 @@ class FormFieldSection extends StatefulWidget {
     super.key,
     required this.title,
     required this.hintText,
-    required this.fieldName,
     required this.initialValue,
+    required this.onSave,
+    required this.validator,
     this.inputFormat = InputFormatters.none,
   });
   final String title;
   final String hintText;
   final String? initialValue;
-  final String fieldName;
   final InputFormatters inputFormat;
+  final Function(String?) onSave;
+  final Function(String?) validator;
 
   @override
   State<FormFieldSection> createState() => _FormFieldSectionState();
@@ -30,10 +32,12 @@ class _FormFieldSectionState extends State<FormFieldSection> {
       mask: '##/##/####', filter: {"#": RegExp(r'[0-9]')});
   final _zipCode =
       MaskTextInputFormatter(mask: '##-###', filter: {"#": RegExp(r'[0-9]')});
+  final FocusNode _focusNode = FocusNode();
 
   @override
   void initState() {
     controller.text = widget.initialValue ?? '';
+    _focusNode.addListener(focusHandler);
     super.initState();
   }
 
@@ -50,6 +54,7 @@ class _FormFieldSectionState extends State<FormFieldSection> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: TextFormField(
+              focusNode: _focusNode,
               controller: controller,
               decoration: InputDecoration(hintText: widget.hintText),
               inputFormatters: switch (widget.inputFormat) {
@@ -57,19 +62,23 @@ class _FormFieldSectionState extends State<FormFieldSection> {
                 InputFormatters.birthDate => [_birthDate],
                 InputFormatters.none => null
               },
-              onSaved: (newValue) => context
-                  .read<PersonBloc>()
-                  .saveFormData({widget.fieldName: newValue}),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Wypełnij pole';
-                }
-                return null;
-              },
+              onSaved: (newValue) => widget.onSave(newValue),
+              validator: (value) => widget.validator(value),
             ),
           )
         ],
       ),
     );
+  }
+
+  void focusHandler() {
+    if (!_focusNode.hasFocus) {
+      _focusNode.unfocus();
+
+      controller.value = TextEditingValue(
+          text: context
+              .read<PersonBloc>()
+              .textFormFielCheck(controller.text, widget.inputFormat));
+    }
   }
 }

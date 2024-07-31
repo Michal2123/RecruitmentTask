@@ -13,9 +13,10 @@ final class PersonModel extends Equatable {
       required this.zipCode,
       required this.city,
       required this.street,
-      required this.groups})
+      List<PersonGroupModel>? personGroupList})
       : assert(id == null || id.isNotEmpty, 'id must be null or not empty'),
-        id = id ?? const Uuid().v4();
+        id = id ?? const Uuid().v4(),
+        personGroupList = personGroupList ?? <PersonGroupModel>[];
 
   final String id;
   final String firstName;
@@ -24,9 +25,45 @@ final class PersonModel extends Equatable {
   final String zipCode;
   final String city;
   final String street;
-  final List<dynamic> groups;
+  final List<PersonGroupModel> personGroupList;
+
+  PersonModel copyWith(
+      {String? firstName,
+      String? lastName,
+      String? birthDate,
+      String? zipCode,
+      String? city,
+      String? street,
+      List<PersonGroupModel>? personGroupList}) {
+    return PersonModel(
+        id: id,
+        firstName: firstName ?? this.firstName,
+        lastName: lastName ?? this.lastName,
+        birthDate: birthDate ?? this.birthDate,
+        zipCode: zipCode ?? this.zipCode,
+        city: city ?? this.city,
+        street: street ?? this.street,
+        personGroupList: personGroupList ?? this.personGroupList);
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      PersonFieldName.firstName.name: firstName,
+      PersonFieldName.lastName.name: lastName,
+      PersonFieldName.birthDate.name: birthDate,
+      PersonFieldName.zipCode.name: zipCode,
+      PersonFieldName.city.name: city,
+      PersonFieldName.street.name: street,
+      PersonFieldName.personGroupList.name: personGroupList,
+    };
+  }
 
   factory PersonModel.fromJson(Map<String, dynamic> json) {
+    var personGroup =
+        List<dynamic>.from(json[PersonFieldName.personGroupList.name])
+            .map((e) => PersonGroupModel.fromJson(e))
+            .toList();
     return PersonModel(
         id: json['id'],
         firstName: json[PersonFieldName.firstName.name],
@@ -35,9 +72,30 @@ final class PersonModel extends Equatable {
         zipCode: json[PersonFieldName.zipCode.name],
         city: json[PersonFieldName.city.name],
         street: json[PersonFieldName.street.name],
-        groups: json[PersonFieldName.groups.name]);
+        personGroupList: personGroup);
   }
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [
+        id,
+        firstName,
+        lastName,
+        birthDate,
+        zipCode,
+        city,
+        street,
+        personGroupList
+      ];
+}
+
+final class PersonGroupModel extends Equatable {
+  const PersonGroupModel({required this.id, required this.groupName});
+  final String id;
+  final String groupName;
+
+  factory PersonGroupModel.fromJson(Map<String, dynamic> json) {
+    return PersonGroupModel(id: json['id'], groupName: json['groupName']);
+  }
+  @override
+  List<Object> get props => [id, groupName];
 }

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_recruitment_task/src/api/group_api.dart';
+import 'package:flutter_recruitment_task/src/api/person_api.dart';
+import 'package:flutter_recruitment_task/src/database/database_client.dart';
 import 'package:flutter_recruitment_task/src/group_list/block/group_bloc.dart';
 import 'package:flutter_recruitment_task/src/person_list/block/person_block.dart';
 import 'package:flutter_recruitment_task/src/repository/repository.dart';
@@ -12,8 +15,11 @@ import 'src/settings/settings_service.dart';
 void main() async {
   // Set up the SettingsController, which will glue user settings to multiple
   // Flutter Widgets.
+  final dbClient = DatabaseClient.instance;
   final settingsController = SettingsController(SettingsService());
-  final repository = Repository();
+  final repository = Repository(
+      personApi: PersonApi(dbClient: dbClient),
+      groupApi: GroupApi(dbClient: dbClient));
   Bloc.observer = SimpleBlocObserver();
 
   // Load the user's preferred theme while the splash screen is displayed.

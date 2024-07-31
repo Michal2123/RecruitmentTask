@@ -45,3 +45,10 @@ final class GroupSave extends GroupEvent {
   @override
   List<Object?> get props => [];
 }
+
+final class GroupEditPersonDelete extends GroupEvent {
+  GroupEditPersonDelete({required this.personId});
+  final String personId;
+  @override
+  List<Object?> get props => [personId];
+}

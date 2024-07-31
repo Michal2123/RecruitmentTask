@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_recruitment_task/src/model/person_model.dart';
 import 'package:flutter_recruitment_task/src/person_list/block/person_block.dart';
 import 'package:flutter_recruitment_task/src/person_list/view/person_detail_view/person_detail_view_sections/floating_action_button_section.dart';
 import 'package:flutter_recruitment_task/src/person_list/view/person_detail_view/person_detail_view_sections/paragraph_section.dart';
@@ -79,9 +80,10 @@ class PersonDetailView extends StatelessWidget {
                   Wrap(
                     spacing: 5,
                     children: [
-                      for (var group in state.person?.groups ?? [])
+                      for (var group in state.person?.personGroupList ??
+                          <PersonGroupModel>[])
                         Text(
-                          group.toString(),
+                          group.groupName,
                           style: const TextStyle(fontSize: 18),
                         )
                     ],

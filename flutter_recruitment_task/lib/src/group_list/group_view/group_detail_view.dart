@@ -14,7 +14,10 @@ class GroupDetailView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.pushNamed(context, GroupFormView.routeName),
+        onPressed: () {
+          context.read<GroupBloc>().add(GroupFormCreate());
+          Navigator.pushNamed(context, GroupFormView.routeName);
+        },
         child: const Text(
           'Edit',
           style: TextStyle(fontSize: 22),

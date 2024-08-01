@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_recruitment_task/src/utils/enums.dart';
@@ -17,19 +19,34 @@ class GroupModel extends Equatable {
     return {
       'id': id,
       GroupFieldName.groupName.name: groupName,
-      GroupFieldName.groupMemberList.name: groupMemberList,
+      GroupFieldName.groupMemberList.name: groupMemberList.isNotEmpty
+          ? jsonEncode(groupMemberList.map((e) => e.toMap()).toList())
+          : jsonEncode(groupMemberList),
     };
   }
 
+  GroupModel copyWith(
+      {String? groupName, List<GroupMemberModel>? groupMemberList}) {
+    return GroupModel(
+        id: id,
+        groupName: groupName ?? this.groupName,
+        groupMemberList: groupMemberList ?? this.groupMemberList);
+  }
+
   factory GroupModel.fromJson(Map<String, dynamic> json) {
-    var groupMemberList =
-        List<dynamic>.from(json[GroupFieldName.groupMemberList.name])
-            .map((e) => GroupMemberModel.fromJson(e))
-            .toList();
+    var groupMemberList = List<dynamic>.from(
+        jsonDecode(json[GroupFieldName.groupMemberList.name]));
+    if (groupMemberList.isNotEmpty) {
+      groupMemberList =
+          groupMemberList.map((e) => GroupMemberModel.fromJson(e)).toList();
+    }
+
     return GroupModel(
         id: json['id'],
         groupName: json[GroupFieldName.groupName.name],
-        groupMemberList: groupMemberList);
+        groupMemberList: groupMemberList.isNotEmpty
+            ? groupMemberList as List<GroupMemberModel>
+            : []);
   }
 
   @override
@@ -44,6 +61,21 @@ class GroupMemberModel extends Equatable {
   final String id;
   final String firstName;
   final bool isCheck;
+
+  GroupMemberModel copyWith({String? firstName, bool? isCheck}) {
+    return GroupMemberModel(
+        id: id,
+        firstName: firstName ?? this.firstName,
+        isCheck: isCheck ?? this.isCheck);
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'firstName': firstName,
+      'isCheck': isCheck,
+    };
+  }
 
   factory GroupMemberModel.fromJson(Map<String, dynamic> json) {
     return GroupMemberModel(id: json['id'], firstName: json['firstName']);

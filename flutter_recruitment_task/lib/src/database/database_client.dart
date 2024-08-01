@@ -18,33 +18,29 @@ class DatabaseClient {
     return _database!;
   }
 
+  ///On initiation of this singleton function initiate new database and create tables
+  /// or just connect to existing database.
   Future<Database> _initDatabase() async {
-    return await openDatabase(
-      join(await getDatabasesPath(), 'exam_database.db'),
-      onCreate: (db, version) {
-        Batch batch = db.batch();
-        batch.execute(
-          '''CREATE TABLE 
-        ${DatabaseTables.person.name}(
-        id TEXT PRIMARY KEY, 
-        ${PersonFieldName.firstName.name} TEXT NOT NULL, 
+    return openDatabase(
+      join(await getDatabasesPath(), 'database.db'),
+      onCreate: (db, version) async {
+        await db.execute('''CREATE TABLE
+        ${DatabaseTables.tableGroup.name}(
+        id TEXT PRIMARY KEY,
+        ${GroupFieldName.groupName.name} TEXT NOT NULL,
+        ${GroupFieldName.groupMemberList.name} TEXT NOT NULL
+        )''');
+        await db.execute('''CREATE TABLE
+        ${DatabaseTables.tablePerson.name}(
+        id TEXT PRIMARY KEY,
+        ${PersonFieldName.firstName.name} TEXT NOT NULL,
         ${PersonFieldName.lastName.name} TEXT NOT NULL,
         ${PersonFieldName.birthDate.name} TEXT NOT NULL,
         ${PersonFieldName.zipCode.name} TEXT NOT NULL,
         ${PersonFieldName.city.name} TEXT NOT NULL,
         ${PersonFieldName.street.name} TEXT NOT NULL,
         ${PersonFieldName.personGroupList.name} TEXT NOT NULL
-        )''',
-        );
-        batch.execute(
-          '''CREATE TABLE 
-        ${DatabaseTables.group.name}(
-        id TEXT PRIMARY KEY, 
-        ${GroupFieldName.groupName.name} TEXT NOT NULL, 
-        ${GroupFieldName.groupMemberList.name} TEXT NOT NULL
-        )''',
-        );
-        batch.commit();
+        )''');
       },
       version: 1,
     );

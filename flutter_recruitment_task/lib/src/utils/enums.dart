@@ -23,4 +23,4 @@ enum GroupFieldName {
   groupMemberList;
 }
 
-enum DatabaseTables { person, group }
+enum DatabaseTables { tablePerson, tableGroup }

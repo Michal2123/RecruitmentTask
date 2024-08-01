@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_recruitment_task/src/utils/enums.dart';
@@ -55,15 +57,20 @@ final class PersonModel extends Equatable {
       PersonFieldName.zipCode.name: zipCode,
       PersonFieldName.city.name: city,
       PersonFieldName.street.name: street,
-      PersonFieldName.personGroupList.name: personGroupList,
+      PersonFieldName.personGroupList.name: personGroupList.isNotEmpty
+          ? jsonEncode(personGroupList.map((e) => e.toMap()).toList())
+          : jsonEncode(personGroupList),
     };
   }
 
   factory PersonModel.fromJson(Map<String, dynamic> json) {
-    var personGroup =
-        List<dynamic>.from(json[PersonFieldName.personGroupList.name])
-            .map((e) => PersonGroupModel.fromJson(e))
-            .toList();
+    var personGroup = List<dynamic>.from(
+        jsonDecode(json[PersonFieldName.personGroupList.name]));
+    if (personGroup.isNotEmpty) {
+      personGroup =
+          personGroup.map((e) => PersonGroupModel.fromJson(e)).toList();
+    }
+
     return PersonModel(
         id: json['id'],
         firstName: json[PersonFieldName.firstName.name],
@@ -72,7 +79,9 @@ final class PersonModel extends Equatable {
         zipCode: json[PersonFieldName.zipCode.name],
         city: json[PersonFieldName.city.name],
         street: json[PersonFieldName.street.name],
-        personGroupList: personGroup);
+        personGroupList: personGroup.isNotEmpty
+            ? personGroup as List<PersonGroupModel>
+            : []);
   }
 
   @override
@@ -92,6 +101,13 @@ final class PersonGroupModel extends Equatable {
   const PersonGroupModel({required this.id, required this.groupName});
   final String id;
   final String groupName;
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'groupName': groupName,
+    };
+  }
 
   factory PersonGroupModel.fromJson(Map<String, dynamic> json) {
     return PersonGroupModel(id: json['id'], groupName: json['groupName']);

@@ -5,7 +5,7 @@ import 'package:flutter_recruitment_task/src/utils/enums.dart';
 mixin FormData {
   Map<String, String?> formData = {};
 
-  ///Function collect data from TextFormFields and store them in [fromData].
+  ///Collect data from TextFormFields and store them in [fromData].
   saveFormData(Map<String, String?> data) {
     formData.addAll(data);
   }
@@ -15,7 +15,7 @@ mixin FormData {
     formData = {};
   }
 
-  ///Function takes [id] and [groups] parameters and creates new person object using saved data
+  ///Takes [id] and [groups] parameters and creates new person object using saved data
   ///from [formData].
   PersonModel parseToPersonModel({String? id, List<PersonGroupModel>? groups}) {
     return PersonModel(
@@ -29,7 +29,7 @@ mixin FormData {
         personGroupList: groups ?? <PersonGroupModel>[]);
   }
 
-  ///Function takes [id] and [members] parameters and creates new group object usnig saved data
+  ///Takes [id] and [members] parameters and creates new group object usnig saved data
   ///from [formData].
   GroupModel parseToGroupModel({String? id, List<GroupMemberModel>? members}) {
     return GroupModel(

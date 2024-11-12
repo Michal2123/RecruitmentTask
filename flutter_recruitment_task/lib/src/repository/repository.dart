@@ -18,52 +18,52 @@ final class Repository extends Equatable {
   @override
   List<Object> get props => [personList, groupList, personList, groupList];
 
-  /// Function call [personApi.get] method, convert anto return respons as [PersonModel] object.
+  ///Call [personApi.get] method, convert anto return respons as [PersonModel] object.
   Future<List<PersonModel>> getPersonList() async {
     var response = await _personApi.get();
     return response.map((e) => PersonModel.fromJson(e)).toList();
   }
 
-  /// Function call [groupApi.get] method, convert anto return respons as [GroupModel] object.
+  ///Call [groupApi.get] method, convert anto return respons as [GroupModel] object.
   Future<List<GroupModel>> getGroupList() async {
     var response = await _groupApi.get();
     return response.map((e) => GroupModel.fromJson(e)).toList();
   }
 
-  ///Function take parameter [person] and convert it do map, than call [personApi.insert] method
+  ///Take parameter [person] and convert it do map, than call [personApi.insert] method
   /// and pass maped [person] as parameter.
   Future<void> insertNewPerson(PersonModel person) async {
     var personMap = person.toMap();
     _personApi.insert(personMap);
   }
 
-  ///Function take parameter [group] and convert it do map, than call [groupApi.insert] method
+  ///Take parameter [group] and convert it do map, than call [groupApi.insert] method
   /// and pass maped [group] as parameter.
   Future<void> insertNewgroup(GroupModel group) async {
     var groupMap = group.toMap();
     _groupApi.insert(groupMap);
   }
 
-  ///Function take parameter [person] and convert it do map, than call [personApi.update] method
+  ///Take parameter [person] and convert it do map, than call [personApi.update] method
   /// and pass maped [person] as parameter.
   Future<void> updatePerson(PersonModel person) async {
     var personMap = person.toMap();
     _personApi.update(personMap, person.id);
   }
 
-  ///Function take parameter [group] and convert it do map, than call [groupApi.update] method
+  ///Take parameter [group] and convert it do map, than call [groupApi.update] method
   /// and pass maped [group] as parameter.
   Future<void> updateGroup(GroupModel group) async {
     var groupMap = group.toMap();
     _groupApi.update(groupMap, group.id);
   }
 
-  ///Function takes [personId], call [personApi.delete] method and pass [personId] as parameter.
+  ///Takes [personId], call [personApi.delete] method and pass [personId] as parameter.
   Future<void> deletePerson(String personId) async {
     _personApi.delete(personId);
   }
 
-  ///Function takes [groupId], call [groupApi.delete] method and pass [groupId] as parameter.
+  ///Takes [groupId], call [groupApi.delete] method and pass [groupId] as parameter.
   Future<void> deleteGroup(String groupId) async {
     _groupApi.delete(groupId);
   }

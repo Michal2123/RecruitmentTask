@@ -24,7 +24,7 @@ class PersonBloc extends Bloc<PersonEvent, PersonState> with FormData {
 
   final Repository _repository;
 
-  ///Function call [getPersonList] from [Repository], update [status] and [personList]
+  ///Call [getPersonList] from [Repository], update [status] and [personList]
   ///of [PersonState].
   ///Get all person list.
   Future<void> _onPersonListGet(
@@ -41,7 +41,7 @@ class PersonBloc extends Bloc<PersonEvent, PersonState> with FormData {
     }
   }
 
-  ///Function call [deletePerson] from [Repository] and updates [personList] of [PersonState].
+  ///Call [deletePerson] from [Repository] and updates [personList] of [PersonState].
   ///Deletes person from [personList].
   Future<void> _onPersonDelete(
       PersonDelete event, Emitter<PersonState> emit) async {
@@ -52,7 +52,7 @@ class PersonBloc extends Bloc<PersonEvent, PersonState> with FormData {
     emit(state.copyWith(personList: List.from(_repository.personList)));
   }
 
-  ///Function saves or updates person object.
+  ///Saves or updates person object.
   ///Call [updatePerson] if person object exists or [insertPerson] from [Repository].
   ///Updates [personList], [person] and [status] of [PersonState].
   Future<void> _onPersonSave(
@@ -78,7 +78,7 @@ class PersonBloc extends Bloc<PersonEvent, PersonState> with FormData {
     clearFormData();
   }
 
-  ///Function updates [person] and [status] of [PersonState].
+  ///Updates [person] and [status] of [PersonState].
   ///Save selected person object.
   Future<void> _onPersonSelect(
       PersonSelect event, Emitter<PersonState> emit) async {
@@ -92,7 +92,7 @@ class PersonBloc extends Bloc<PersonEvent, PersonState> with FormData {
     emit(state.copyWith(person: null, status: PersonStatus.initial));
   }
 
-  ///Function updates [personList] of [PersonState].
+  ///Updates [personList] of [PersonState].
   ///Calls [findAndAddGroupItem], [findAndRemoveGroupItem], [findAndUpdateGroupName]
   ///end updates information about group of which person is a member.
   Future<void> _onPersonGroupEdit(
@@ -105,7 +105,7 @@ class PersonBloc extends Bloc<PersonEvent, PersonState> with FormData {
     emit(state.copyWith(personList: _repository.personList));
   }
 
-  ///Function updates [personList] of [PersonState].
+  ///Updates [personList] of [PersonState].
   ///Deletes info about group from [peronGroupList] and call [removePersonGroupItem].
   Future<void> _onPersonGroupDelete(
       PersonGroupDelete event, Emitter<PersonState> emit) async {
@@ -117,7 +117,7 @@ class PersonBloc extends Bloc<PersonEvent, PersonState> with FormData {
     emit(state.copyWith(personList: _repository.personList));
   }
 
-  ///Function finds all persons that are no longer part of selected group.
+  ///Finds all persons that are no longer part of selected group.
   ///Call [removePersonGroupItem].
   Future<void> findAndRemoveGroupItem({required GroupModel group}) async {
     var personListRemove = _repository.personList
@@ -135,7 +135,7 @@ class PersonBloc extends Bloc<PersonEvent, PersonState> with FormData {
     }
   }
 
-  ///Function removes info from [personGroupList] about group that person is no part of.
+  ///Removes info from [personGroupList] about group that person is no part of.
   ///Call [overridePersonItem] .
   Future<void> removePersonGroupItem(
       {required PersonModel person, required String groupId}) async {
@@ -145,7 +145,7 @@ class PersonBloc extends Bloc<PersonEvent, PersonState> with FormData {
     await overridePersonItem(newPerson);
   }
 
-  ///Function find all persons that have no info about group they're part of.
+  ///Find all persons that have no info about group they're part of.
   ///Call [addPersonGroupItem].
   Future<void> findAndAddGroupItem({required GroupModel group}) async {
     var personListAdd = _repository.personList
@@ -165,7 +165,7 @@ class PersonBloc extends Bloc<PersonEvent, PersonState> with FormData {
     }
   }
 
-  ///Function add info about group that person is part of to [personGroupList].
+  ///Add info about group that person is part of to [personGroupList].
   ///Call [overridePersonItem].
   Future<void> addPersonGroupItem(
       {required PersonModel person, required GroupModel group}) async {
@@ -176,7 +176,7 @@ class PersonBloc extends Bloc<PersonEvent, PersonState> with FormData {
     await overridePersonItem(newPerson);
   }
 
-  ///Function finds persons that are part of group where [groupName] changed.
+  ///Finds persons that are part of group where [groupName] changed.
   ///Call [updatePersonGroupName].
   Future<void> findAndUpdateGroupName({required GroupModel group}) async {
     var personListUpdate = _repository.personList
@@ -190,7 +190,7 @@ class PersonBloc extends Bloc<PersonEvent, PersonState> with FormData {
     }
   }
 
-  ///Function update [groupName] of group where person are part of.
+  ///Update [groupName] of group where person are part of.
   ///Call [overridePersonItem].
   Future<void> updatePersonGroupName(
       {required PersonModel person, required GroupModel group}) async {
@@ -202,7 +202,7 @@ class PersonBloc extends Bloc<PersonEvent, PersonState> with FormData {
     await overridePersonItem(newPerson);
   }
 
-  ///Funciton updates person object in [personList] and call [updatePerson] from [Repository].
+  ///Updates person object in [personList] and call [updatePerson] from [Repository].
   ///
   Future<void> overridePersonItem(PersonModel person) async {
     await _repository.updatePerson(person);
@@ -210,15 +210,12 @@ class PersonBloc extends Bloc<PersonEvent, PersonState> with FormData {
         .indexWhere((element) => element.id == person.id)] = person;
   }
 
-  ///Function select group from [groupList] if [group.id] equls [id].
+  ///Select group from [groupList] if [group.id] equls [id].
   GroupModel currentGroup(String? id) {
-    // if (id == null) {
-    //   return _repository.groupList.last;
-    // }
     return _repository.groupList.firstWhere((element) => element.id == id);
   }
 
-  ///Function check if TextFormFiel inputFormatter is [birthDate] inputFormatter
+  ///Check if TextFormFiel inputFormatter is [birthDate] inputFormatter
   ///if yes return [birthDateCheck] and check controller value.
   String textFormFielCheck(String dateText, InputFormatters inputFormatter) {
     switch (inputFormatter) {
@@ -229,7 +226,7 @@ class PersonBloc extends Bloc<PersonEvent, PersonState> with FormData {
     }
   }
 
-  ///Function check if value from birthDateFormfield is correct.
+  ///Check if value from birthDateFormfield is correct.
   ///Parse value to [DateTime] and check if date is after date now.
   String birthDateCheck(String dateText) {
     try {

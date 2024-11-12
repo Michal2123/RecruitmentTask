@@ -26,7 +26,7 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> with FormData {
 
   final Repository _repository;
 
-  ///Async function, call [getGroupList] from [Repository] and update
+  ///Call [getGroupList] from [Repository] and update
   ///[status] and [groupList] in [GroupState].
   ///Get add groups.
   Future<void> _onGroupListGet(
@@ -44,7 +44,7 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> with FormData {
     }
   }
 
-  ///Async function, call [deleteGroup] from [Repository] and update
+  ///Call [deleteGroup] from [Repository] and update
   ///[groupList] in [GroupState].
   ///Delete [group] from list of groups.
   Future<void> _onGroupDelete(
@@ -55,7 +55,7 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> with FormData {
           ..removeWhere((element) => element.id == event.group.id))));
   }
 
-  ///Function updates [group] and [status] in [GroupState].
+  ///Updates [group] and [status] in [GroupState].
   ///Save in [GroupState] state selected [group].
   _onGroupSelect(GroupSelect event, Emitter<GroupState> emit) {
     emit(state.copyWith(
@@ -64,7 +64,7 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> with FormData {
     ));
   }
 
-  ///Function reset [isCheck] field of all [PersonModel] objects of [groupMembers] and clear [group] object.
+  ///Reset [isCheck] field of all [PersonModel] objects of [groupMembers] and clear [group] object.
   ///Update [groupMembers], [group] and [status] in [GroupState].
   _onGroupSelectClear(GroupSelectClear event, Emitter<GroupState> emit) {
     var groupMembers = _repository.personList
@@ -77,7 +77,7 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> with FormData {
         groupMembers: groupMembers, group: null, status: GroupStatus.initial));
   }
 
-  ///Function get all members of selected group [groupMembers] and updates this list in [GroupState].
+  ///Get all members of selected group [groupMembers] and updates this list in [GroupState].
   Future<void> _onGroupFormCreat(
       GroupFormCreate event, Emitter<GroupState> emit) async {
     var groupMembers = _repository.personList.map(
@@ -92,7 +92,7 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> with FormData {
     emit(state.copyWith(groupMembers: groupMembers, group: state.group));
   }
 
-  ///Function select member from [groupMembers] and updates this member.
+  ///Select member from [groupMembers] and updates this member.
   ///Updates [groupMember] in [GroupState].
   ///Call when [isCheck] changes value.
   Future<void> _onGroupMemberUpdate(
@@ -105,7 +105,7 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> with FormData {
     emit(state.copyWith(groupMembers: groupMembers, group: state.group));
   }
 
-  ///Function save new or updates existing group in [groupList].
+  ///Save new or updates existing group in [groupList].
   ///Call [updateGroup] if group exists or call [insertNewGroup] if group is new.
   ///Updates [groupList], [group] and [state] in [GroupState].
   Future<void> _onGroupSave(GroupSave event, Emitter<GroupState> emit) async {
@@ -131,7 +131,7 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> with FormData {
     }
   }
 
-  ///Function search member in all groups and removes.
+  ///Search member in all groups and removes.
   ///Call when person is delete from list of persons.
   ///Updates [groupList] in [GroupState].
   Future<void> _onGroupEditPersonDelete(
@@ -145,7 +145,7 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> with FormData {
         groupList: List<GroupModel>.from(_repository.groupList)));
   }
 
-  ///Function search member in all groups and updates his name.
+  ///Search member in all groups and updates his name.
   ///Call when peston data are updated.
   ///Call [updateGroup] from [Repository].
   ///Updates [groupList] in [GroupState].
